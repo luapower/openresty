@@ -10,11 +10,12 @@ bindir="$PWD"
 cd "$curdir"
 
 luadir="$bindir/../.."                        # platform-indep. Lua modules
-resty_luadir="$bindir/../../openresty"
+resty_luadir="$bindir/../../openresty"        # platform-indep. OpenResty Lua modules
 platform_dir="$bindir/openresty/lua"          # platform-specific Lua modules
 
 export LUA_CPATH="$bindir/clib/?.so"
 export LUA_PATH="$platform_dir/?.lua;$resty_luadir/?.lua;$luadir/?.lua;$luadir/?/init.lua"
 export TERRA_PATH="$luadir/?.t;$luadir/?/init.t"
 export LD_LIBRARY_PATH="$bindir/openresty:$LD_LIBRARY_PATH"
+
 exec "$bindir/nginx-bin" -p "$luadir" -c "$luadir/nginx.conf" "$@"
