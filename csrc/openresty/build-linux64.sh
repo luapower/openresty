@@ -37,10 +37,11 @@ download https://www.openssl.org/source/ $openssl
 
 download_github_release openresty encrypted-session-nginx-module $encrypted_session_nginx_module
 
+# ----------------------------------------------------------------------------
+
 mkdir -p openresty
 cd src/$openresty
 
-true || {
 ./configure \
     --prefix=../../openresty \
     --with-pcre=../$pcre \
@@ -51,7 +52,6 @@ true || {
 
 make -j2
 make install
-}
 
 # ----------------------------------------------------------------------------
 
