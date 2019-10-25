@@ -1,0 +1,20 @@
+--- resty/mysql.lua	2019-10-25 23:44:19.408923034 +0300
++++ resty/mysql.lua.new	2019-10-25 23:43:48.236923034 +0300
+@@ -909,7 +909,7 @@
+             --print("status flags: ", status_flags)
+ 
+             if band(status_flags, SERVER_MORE_RESULTS_EXISTS) ~= 0 then
+-                return rows, "again"
++                return rows, "again", cols
+             end
+ 
+             break
+@@ -928,7 +928,7 @@
+ 
+     self.state = STATE_CONNECTED
+ 
+-    return rows
++    return rows, nil, cols
+ end
+ _M.read_result = read_result
+ 
