@@ -68,7 +68,7 @@ cp -rf $S/nginx/sbin/nginx bin/linux64/nginx-bin
 
 cp -rf $S/luajit/lib/libluajit-5.1.so.2.1.0 $B/openresty/libluajit-5.1.so.2
 cp -rf $S/luajit/share/luajit-2.1.0-beta3/jit openresty/
-rm -rf openresty/jit/vmdev.lua
+rm -rf openresty/jit/vmdef.lua
 cp -rf $S/luajit/share/luajit-2.1.0-beta3/jit/vmdef.lua $B/openresty/lua/jit/
 
 cp -rf $S/lualib/librestysignal.so $C/
