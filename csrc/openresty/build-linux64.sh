@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cd "$(dirname "$0")" || exit 1
+D="$PWD/../.."
 
 openresty=openresty-1.15.8.2
 pcre=pcre-8.43
@@ -39,6 +40,7 @@ download_github_release openresty encrypted-session-nginx-module $encrypted_sess
 mkdir -p openresty
 cd src/$openresty
 
+true || {
 ./configure \
     --prefix=../../openresty \
     --with-pcre=../$pcre \
@@ -49,3 +51,31 @@ cd src/$openresty
 
 make -j2
 make install
+}
+
+# ----------------------------------------------------------------------------
+
+cd "$D"
+
+S=csrc/openresty/openresty
+B=bin/linux64
+C=$B/clib
+
+mkdir -p $B/openresty/lua/jit
+mkdir -p openresty/jit
+
+cp -rf $S/nginx/sbin/nginx bin/linux64/nginx-bin
+
+cp -rf $S/luajit/lib/libluajit-5.1.so.2.1.0 $B/openresty/libluajit-5.1.so.2
+cp -rf $S/luajit/share/luajit-2.1.0-beta3/jit openresty/
+rm -rf openresty/jit/vmdev.lua
+cp -rf $S/luajit/share/luajit-2.1.0-beta3/jit/vmdef.lua $B/openresty/lua/jit/
+
+cp -rf $S/lualib/librestysignal.so $C/
+cp -rf $S/lualib/tablepool.lua ./
+cp -rf $S/lualib/ngx ./
+cp -rf $S/lualib/rds $C/
+cp -rf $S/lualib/redis $C/
+cp -rf $S/lualib/resty ./
+
+patch resty/mysql.lua < $S/../mysql.lua.patch
