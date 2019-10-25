@@ -909,7 +909,7 @@ local function read_result(self, est_nrows)
             --print("status flags: ", status_flags)
 
             if band(status_flags, SERVER_MORE_RESULTS_EXISTS) ~= 0 then
-                return rows, "again"
+                return rows, "again", cols
             end
 
             break
@@ -928,7 +928,7 @@ local function read_result(self, est_nrows)
 
     self.state = STATE_CONNECTED
 
-    return rows
+    return rows, nil, cols
 end
 _M.read_result = read_result
 
