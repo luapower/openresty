@@ -44,6 +44,7 @@ cd src/$openresty
 
 ./configure \
     --prefix=../../openresty \
+    --with-luajit=../../.. \
     --with-pcre=../$pcre \
     --with-pcre-jit \
     --with-zlib=../$zlib \
@@ -52,6 +53,8 @@ cd src/$openresty
 
 make -j2
 make install
+
+exit
 
 # ----------------------------------------------------------------------------
 
